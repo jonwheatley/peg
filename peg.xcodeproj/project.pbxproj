@@ -32,8 +32,8 @@
 		FCB49611153F603A00C6C353 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB4960C153F603A00C6C353 /* Icon-72.png */; };
 		FCB49612153F603A00C6C353 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB4960D153F603A00C6C353 /* Icon.png */; };
 		FCB49613153F603A00C6C353 /* Icon@2x-.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB4960E153F603A00C6C353 /* Icon@2x-.png */; };
-		FCB49614153F603A00C6C353 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB4960F153F603A00C6C353 /* Icon@2x.png */; };
 		FCB49615153F603A00C6C353 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB49610153F603A00C6C353 /* iTunesArtwork.png */; };
+		FCB49617153F651B00C6C353 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB49616153F651B00C6C353 /* Icon@2x.png */; };
 		FCBA3309153D38110056347B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBA3308153D38110056347B /* UIKit.framework */; };
 		FCBA330B153D38110056347B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBA330A153D38110056347B /* Foundation.framework */; };
 		FCBA330D153D38110056347B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBA330C153D38110056347B /* CoreGraphics.framework */; };
@@ -84,8 +84,8 @@
 		FCB4960C153F603A00C6C353 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		FCB4960D153F603A00C6C353 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FCB4960E153F603A00C6C353 /* Icon@2x-.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x-.png"; sourceTree = "<group>"; };
-		FCB4960F153F603A00C6C353 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		FCB49610153F603A00C6C353 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		FCB49616153F651B00C6C353 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		FCBA3304153D38110056347B /* peg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = peg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBA3308153D38110056347B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FCBA330A153D38110056347B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -191,10 +191,10 @@
 		FCBA3325153D38270056347B /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FCB49616153F651B00C6C353 /* Icon@2x.png */,
 				FCB4960C153F603A00C6C353 /* Icon-72.png */,
 				FCB4960D153F603A00C6C353 /* Icon.png */,
 				FCB4960E153F603A00C6C353 /* Icon@2x-.png */,
-				FCB4960F153F603A00C6C353 /* Icon@2x.png */,
 				FCB49610153F603A00C6C353 /* iTunesArtwork.png */,
 				FCB49604153F501D00C6C353 /* welcome.png */,
 				FCB49605153F501D00C6C353 /* welcome@2x.png */,
@@ -320,8 +320,8 @@
 				FCB49611153F603A00C6C353 /* Icon-72.png in Resources */,
 				FCB49612153F603A00C6C353 /* Icon.png in Resources */,
 				FCB49613153F603A00C6C353 /* Icon@2x-.png in Resources */,
-				FCB49614153F603A00C6C353 /* Icon@2x.png in Resources */,
 				FCB49615153F603A00C6C353 /* iTunesArtwork.png in Resources */,
+				FCB49617153F651B00C6C353 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,10 +414,12 @@
 		FCBA3323153D38110056347B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jon Wheatley (JXFR2J3R5P)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "peg/peg-Prefix.pch";
 				INFOPLIST_FILE = "peg/peg-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E352CF83-A3DB-4846-98A9-778106348ED6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -425,10 +427,12 @@
 		FCBA3324153D38110056347B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jon Wheatley (JXFR2J3R5P)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "peg/peg-Prefix.pch";
 				INFOPLIST_FILE = "peg/peg-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E352CF83-A3DB-4846-98A9-778106348ED6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
