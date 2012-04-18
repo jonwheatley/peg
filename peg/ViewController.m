@@ -7,8 +7,462 @@
 //
 
 #import "ViewController.h"
+#include <stdlib.h>
 
 @implementation ViewController
+
+#define EMPTY 1
+#define PEG 2
+#define PEGPRESSED 3
+#define JUMPTO 4
+
+@synthesize a1;
+@synthesize a2;
+@synthesize a3;
+@synthesize a4;
+@synthesize a5;
+@synthesize a6;
+@synthesize a7;
+
+@synthesize b1;
+@synthesize b2;
+@synthesize b3;
+@synthesize b4;
+@synthesize b5;
+@synthesize b6;
+@synthesize b7;
+
+@synthesize c1;
+@synthesize c2;
+@synthesize c3;
+@synthesize c4;
+@synthesize c5;
+@synthesize c6;
+@synthesize c7;
+
+@synthesize d1;
+@synthesize d2;
+@synthesize d3;
+@synthesize d4;
+@synthesize d5;
+@synthesize d6;
+@synthesize d7;
+
+@synthesize e1;
+@synthesize e2;
+@synthesize e3;
+@synthesize e4;
+@synthesize e5;
+@synthesize e6;
+@synthesize e7;
+
+@synthesize f1;
+@synthesize f2;
+@synthesize f3;
+@synthesize f4;
+@synthesize f5;
+@synthesize f6;
+@synthesize f7;
+
+@synthesize g1;
+@synthesize g2;
+@synthesize g3;
+@synthesize g4;
+@synthesize g5;
+@synthesize g6;
+@synthesize g7;
+
+@synthesize h1;
+@synthesize h2;
+@synthesize h3;
+@synthesize h4;
+@synthesize h5;
+@synthesize h6;
+@synthesize h7;
+
+@synthesize i1;
+@synthesize i2;
+@synthesize i3;
+@synthesize i4;
+@synthesize i5;
+@synthesize i6;
+@synthesize i7;
+
+
+- (void) clearJumpTo
+{
+    
+    for (int i = 0; i < buttonObjects.count; i++)
+    {
+        UIButton *button = [buttonObjects objectAtIndex:i];
+        if (button.tag == JUMPTO)
+        {
+            button.tag = EMPTY;
+            button.enabled = NO;
+        }
+    }
+    
+}
+
+- (void)loadGame:(NSArray*)gameBoard
+{    
+    
+    NSLog(@"%@", gameBoard);
+
+    
+    
+    pressedButtonObject.enabled = YES;
+    pressedButtonObject.selected = NO;
+    pressedButtonObject.tag = PEG;
+    activePeg = NO;
+    
+    [self clearJumpTo];
+    
+    for (int i = 0; i < [gameBoard count]; i++)
+    {
+        
+        NSLog(@"%@", [gameBoard objectAtIndex:i]);
+        NSLog(@"i: %i", i);
+        
+        if ([[gameBoard objectAtIndex:i] intValue] == 1)
+        {
+            UIButton *button = [buttonObjects objectAtIndex:i];
+            [button setImage:[UIImage imageNamed:@"peg_red.png"] forState:(UIControlStateNormal)];
+            button.enabled = YES;
+            button.tag = PEG;
+        }
+        if ([[gameBoard objectAtIndex:i] intValue] == 0)
+        {
+            UIButton *button = [buttonObjects objectAtIndex:i];
+            button.enabled = NO;
+            button.tag = EMPTY;
+        }
+        
+    }
+    
+}
+
+- (int) countCurrentPegs
+{
+    int currentPegs = 0;
+    
+    for (int i = 0; i < buttonObjects.count; i++)
+    {
+        UIButton *button = [buttonObjects objectAtIndex:i];
+        if (button.tag == PEG)
+        {
+            currentPegs++;
+        }
+    }
+    return currentPegs;
+}
+
+- (void) newTopScore
+{
+    // pull old top score from the database
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
+    NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
+    NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:gameBoardIndex];
+    NSArray *gameBoard = [boardAndScoreObject objectForKey:@"topscore"];  
+    
+    if ()
+    {
+        
+    }
+    
+}
+
+- (BOOL) checkGameOver
+{
+    
+    for (int i = 0; i < buttonObjects.count; i++)
+    {
+        UIButton *button = [buttonObjects objectAtIndex:i];
+        if (button.tag == PEG)
+        {
+            if (i > 13)
+            {
+                // check if there's a peg above the pressed peg
+                if ([[buttonObjects objectAtIndex:i-7] tag] == PEG)
+                {
+                    
+                    UIButton *checkSpace = [buttonObjects objectAtIndex:i-14];
+                    
+                    // make sure there's a space available above that
+                    if ([checkSpace tag] == EMPTY)
+                    {
+                        isGameOver = NO;
+                        return NO;
+                    }
+                }
+                
+            }
+            
+            if ((i != 0) && (i != 1) && (i != 7) && (i != 8) && (i != 14) && (i != 15) && (i != 21) && (i != 22) && (i != 28) && (i != 29) && (i != 35) && (i != 36) && (i != 42) && (i != 43) && (i != 49) && (i != 50) && (i != 56) && (i != 57))
+            {
+                if (i > 1)
+                {
+                    // check if there's a peg to the left of the pressed peg
+                    if ([[buttonObjects objectAtIndex:i-1] tag] == PEG)
+                    {
+                        
+                        UIButton *checkSpace = [buttonObjects objectAtIndex:i-2];
+                        
+                        // make sure there's a space available to the left of that
+                        if ([checkSpace tag] == EMPTY)
+                        {
+                            isGameOver = NO;
+                            return NO;
+                        }
+                    }
+                }
+            }
+            
+            if ((i != 5) && (i != 6) && (i != 12) && (i != 13) && (i != 19) && (i != 20) && (i != 26) && (i != 27) && (i != 33) && (i != 34) && (i != 40) && (i != 41) && (i != 47) && (i != 48) && (i != 54) && (i != 55) && (i != 61) && (i != 62))
+            {
+                // check if there's a peg to the right of the pressed peg
+                if ([[buttonObjects objectAtIndex:i+1] tag] == PEG)
+                {
+                    UIButton *checkSpace = [buttonObjects objectAtIndex:i+2];
+                    
+                    // make sure there's a space available to the right of that
+                    if ([checkSpace tag] == EMPTY)
+                    {
+                        isGameOver = NO;
+                        return NO;
+                    }
+                }
+                
+            }
+            
+            if (i < 48)
+            {
+                // check if there's a peg below of the pressed peg
+                if ([[buttonObjects objectAtIndex:i+7] tag] == PEG)
+                {
+                    
+                    UIButton *checkSpace = [buttonObjects objectAtIndex:i+14];
+                    
+                    // make sure there's a space available below of that
+                    if ([checkSpace tag] == EMPTY)
+                    {
+                        isGameOver = NO;
+                        return NO;
+                    }
+                }
+            }
+        }
+    }
+    
+    isGameOver = YES;
+    
+    [self newTopScore];
+    
+    return isGameOver;
+    
+}
+
+- (UIButton*) grabPegPressedObject
+{
+    
+    for (int i = 0; i < buttonObjects.count; i++)
+    {
+        UIButton *button = [buttonObjects objectAtIndex:i];
+        if (button.tag == PEGPRESSED)
+        {
+            NSLog(@"%i", button.tag);
+            return button;
+        }
+    }
+
+    return nil;
+}
+
+- (IBAction)buttonPressed:(UIButton*)sender
+{
+//    // sound
+//    SystemSoundID pop;
+//    AudioServicesCreateSystemSoundID(CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("pop"), CFSTR("mp3"), NULL), &pop);
+//    AudioServicesPlaySystemSound(pop);
+    
+    
+    // ok, you pressed the button. what's its deal?
+    NSLog(@"%@", sender);
+    
+    // where is it in the array?
+    NSLog(@"the index is: %i", [buttonObjects indexOfObject:sender]);
+    
+    if ([sender tag] == PEGPRESSED)
+    {
+        NSLog(@"are you getting in here?");
+        sender.selected = NO;
+        sender.tag = PEG;
+        activePeg = NO;
+        [self clearJumpTo];
+    }
+    
+    else if ([sender tag] == JUMPTO)
+    {
+        NSLog(@"what about here?");
+        int first = [buttonObjects indexOfObject:sender];
+        int second = [buttonObjects indexOfObject:pressedButtonObject];
+        
+        NSLog(@"second: %i", second);
+        
+        // remove peg that's jumping
+        UIButton *jumpingPeg = [buttonObjects objectAtIndex:second];
+        jumpingPeg.tag = EMPTY;
+        jumpingPeg.selected = NO;
+        jumpingPeg.enabled = NO;
+        [jumpingPeg setImage:[UIImage imageNamed:@"peg_empty.png"] forState:(UIControlStateDisabled)];
+        
+        // work out middle peg
+        int middleNumber = (first + second) / 2;
+        
+        // remove jumped peg 
+        UIButton *jumpedPeg = [buttonObjects objectAtIndex:middleNumber];
+        jumpedPeg.tag = EMPTY;
+        jumpedPeg.enabled = NO;
+        
+        // add new peg to jumped position
+        sender.tag = PEG;
+        sender.enabled = YES;
+        [sender setImage:[UIImage imageNamed:@"peg_red.png"] forState:(UIControlStateNormal)];
+        
+        // reset active peg
+        activePeg = NO;
+        
+        // remove other jump to pegs
+        [self clearJumpTo];
+        
+        if ([self checkGameOver] == YES)
+        {
+            NSLog(@"GAME THE FUCK OVER!!!!!!!! Current pegs: %i", [self countCurrentPegs]);
+        }
+    }
+    
+    else if ([sender tag] == PEG)
+    {
+        NSLog(@"PEG PRESSED!");
+        
+        if (pressedButtonObject.tag == PEGPRESSED)
+        {
+            pressedButtonObject.tag = PEG;
+            pressedButtonObject.selected = NO;
+            activePeg = NO;
+            [self clearJumpTo];
+        }
+        
+        // changed pressed button object so we can remove it later
+        pressedButtonObject = sender;
+        
+        if (activePeg == NO)
+        {
+            // make state selected
+            sender.selected = YES;
+            sender.tag = PEGPRESSED;
+
+            activePeg = YES;
+        }
+
+        int pressedPeg = [buttonObjects indexOfObject:sender];
+        
+        NSLog(@"%i", pressedPeg);
+        
+        // check if top two rows
+        if (pressedPeg > 13)
+        {
+            // check if there's a peg above the pressed peg
+            if ([[buttonObjects objectAtIndex:pressedPeg-7] tag] == PEG)
+            {
+                
+                UIButton *checkSpace = [buttonObjects objectAtIndex:pressedPeg-14];
+                
+                // make sure there's a space available above that
+                if ([checkSpace tag] == EMPTY)
+                {
+                    checkSpace.enabled = YES;
+                    checkSpace.tag = JUMPTO;
+                    [checkSpace setImage:[UIImage imageNamed:@"peg_glow.png"] forState:(UIControlStateNormal)];
+                }
+            }
+
+        }
+        
+        if ((pressedPeg != 0) && (pressedPeg != 1) && (pressedPeg != 7) && (pressedPeg != 8) && (pressedPeg != 14) && (pressedPeg != 15) && (pressedPeg != 21) && (pressedPeg != 22) && (pressedPeg != 28) && (pressedPeg != 29) && (pressedPeg != 35) && (pressedPeg != 36) && (pressedPeg != 42) && (pressedPeg != 43) && (pressedPeg != 49) && (pressedPeg != 50) && (pressedPeg != 56) && (pressedPeg != 57))
+        {
+            if (pressedPeg > 1)
+            {
+                // check if there's a peg to the left of the pressed peg
+                if ([[buttonObjects objectAtIndex:pressedPeg-1] tag] == PEG)
+                {
+                    
+                    UIButton *checkSpace = [buttonObjects objectAtIndex:pressedPeg-2];
+                    
+                    // make sure there's a space available to the left of that
+                    if ([checkSpace tag] == EMPTY)
+                    {
+                        checkSpace.enabled = YES;
+                        checkSpace.tag = JUMPTO;
+                        [checkSpace setImage:[UIImage imageNamed:@"peg_glow.png"] forState:(UIControlStateNormal)];
+                    }
+                }
+            }
+        }
+        
+        if ((pressedPeg != 5) && (pressedPeg != 6) && (pressedPeg != 12) && (pressedPeg != 13) && (pressedPeg != 19) && (pressedPeg != 20) && (pressedPeg != 26) && (pressedPeg != 27) && (pressedPeg != 33) && (pressedPeg != 34) && (pressedPeg != 40) && (pressedPeg != 41) && (pressedPeg != 47) && (pressedPeg != 48) && (pressedPeg != 54) && (pressedPeg != 55) && (pressedPeg != 61) && (pressedPeg != 62))
+        {
+            // check if there's a peg to the right of the pressed peg
+            if ([[buttonObjects objectAtIndex:pressedPeg+1] tag] == PEG)
+            {
+                UIButton *checkSpace = [buttonObjects objectAtIndex:pressedPeg+2];
+                
+                // make sure there's a space available to the right of that
+                if ([checkSpace tag] == EMPTY)
+                {
+                    checkSpace.enabled = YES;
+                    checkSpace.tag = JUMPTO;
+                    [checkSpace setImage:[UIImage imageNamed:@"peg_glow.png"] forState:(UIControlStateNormal)];
+                }
+            }
+            
+        }
+        
+        if (pressedPeg < 48)
+        {
+            // check if there's a peg below of the pressed peg
+            if ([[buttonObjects objectAtIndex:pressedPeg+7] tag] == PEG)
+            {
+                
+                UIButton *checkSpace = [buttonObjects objectAtIndex:pressedPeg+14];
+                
+                // make sure there's a space available below of that
+                if ([checkSpace tag] == EMPTY)
+                {
+                    checkSpace.enabled = YES;
+                    checkSpace.tag = JUMPTO;
+                    [checkSpace setImage:[UIImage imageNamed:@"peg_glow.png"] forState:(UIControlStateNormal)];
+                }
+            }
+        }
+    }
+    
+}
+
+- (void)loadButtonObjects
+{
+    buttonObjects = [[NSArray alloc] initWithObjects:a1, a2, a3, a4, a5, a6, a7,
+                                                     b1, b2, b3, b4, b5, b6, b7,
+                                                     c1, c2, c3, c4, c5, c6, c7,
+                                                     d1, d2, d3, d4, d5, d6, d7,
+                                                     e1, e2, e3, e4, e5, e6, e7,
+                                                     f1, f2, f3, f4, f5, f6, f7, 
+                                                     g1, g2, g3, g4, g5, g6, g7, 
+                                                     h1, h2, h3, h4, h5, h6, h7,
+                                                     i1, i2, i3, i4, i5, i6, i7, nil];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -16,10 +470,141 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)loadRandomGame
+{
+
+//    NSArray *gameBoard = [allGameBoards objectAtIndex:arc4random() % allGameBoards.count];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
+    NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
+    
+    NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:arc4random() % boardsAndScores.count];
+    
+    NSArray *gameBoard = [boardAndScoreObject objectForKey:@"gameboard"];    
+    
+    NSLog(@"SFSDFSDFSDFSDFDFSDFSDDS: %@", gameBoard);
+    
+    [self loadButtonObjects];
+    [self loadGame:gameBoard];
+    
+    
+    
+//    NSArray *gameBoard1 = [[NSArray alloc] initWithObjects:
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"1", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil];  
+//    
+//    [self loadGame:gameBoard1];
+    
+    
+    
+    gameBoardIndex = [boardsAndScores indexOfObject:boardAndScoreObject];
+    
+    NSLog(@"gameboardindex: %i", gameBoardIndex);
+    
+}
+
+- (IBAction)restartGame
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
+    NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
+    
+    NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:gameBoardIndex];
+    
+    NSArray *gameBoard = [boardAndScoreObject objectForKey:@"gameboard"];   
+    
+    [self loadGame:gameBoard];
+    
+}
+
+- (IBAction)shuffleGame
+{
+    [self loadRandomGame];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
+    
+    NSArray *boardsAndScoresArray = [[NSArray alloc] initWithObjects:
+                                            [[NSDictionary alloc] initWithObjectsAndKeys:
+                                             [[NSArray alloc] initWithObjects:
+                                              @"1", @"0", @"0", @"0", @"0", @"0", @"1", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"1", @"0", @"0", @"0", @"0", @"0", @"1", nil], @"gameboard", @"topscore", @"0", nil],
+                                            [[NSDictionary alloc] initWithObjectsAndKeys:
+                                             [[NSArray alloc] initWithObjects:
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                            [[NSDictionary alloc] initWithObjectsAndKeys:
+                                             [[NSArray alloc] initWithObjects:
+                                              @"0", @"1", @"0", @"0", @"0", @"1", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                              @"0", @"1", @"0", @"0", @"0", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil], nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
+    NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
+    
+    if (boardsAndScores.count < boardsAndScoresArray.count)
+    {
+        [defaults setObject:boardsAndScoresArray forKey:@"boardsAndScores"];
+        [defaults synchronize];
+    }
+    
+    
+    
+//    NSArray *gameBoard1 = [[NSArray alloc] initWithObjects:
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil];
+    
+
+    
+    
+//    allGameBoards = [[NSArray alloc] initWithObjects:gameBoard1, gameBoard2, gameBoard3, gameBoard4, nil];
+    
+    [self loadRandomGame];
+
+    
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
