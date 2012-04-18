@@ -109,6 +109,10 @@
 @property (strong, retain) IBOutlet UIButton *i6;
 @property (strong, retain) IBOutlet UIButton *i7;
 
+// best score ui
+
+@property (strong, retain) IBOutlet UILabel *bestScore;
+
 - (IBAction)buttonPressed:(UIButton*)sender;
 - (IBAction)shuffleGame;
 - (IBAction)restartGame;

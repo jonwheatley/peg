@@ -8,12 +8,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "peg/ViewController.m"
-         timestampString = "356414976.897068"
+         timestampString = "356417970.764971"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
-         landmarkName = "-loadGame:"
+         startingLineNumber = "164"
+         endingLineNumber = "164"
+         landmarkName = "-newTopScore"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "peg/ViewController.m"
+         timestampString = "356418282.046408"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "524"
+         endingLineNumber = "524"
+         landmarkName = "-loadRandomGame"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

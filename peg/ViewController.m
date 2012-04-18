@@ -88,6 +88,8 @@
 @synthesize i6;
 @synthesize i7;
 
+@synthesize bestScore;
+
 
 - (void) clearJumpTo
 {
@@ -164,11 +166,33 @@
     NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
     NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
     NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:gameBoardIndex];
-    NSArray *gameBoard = [boardAndScoreObject objectForKey:@"topscore"];  
+    NSString *topscore = [boardAndScoreObject objectForKey:@"topscore"];  
     
-    if ()
+    NSLog(@"topscore in value: %i", [topscore intValue]);
+    
+    if ([topscore intValue] == 0)
     {
+        topscore = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
         
+        NSMutableArray *mutableBoardsAndScores = [boardsAndScores mutableCopy];
+        
+        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscore forKey:@"topscore"];
+        
+        [defaults setObject:mutableBoardsAndScores forKey:@"boardsAndScores"];
+        [defaults synchronize];
+        
+    }
+    
+    else if ([self countCurrentPegs] < [topscore intValue])
+    {
+        topscore = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
+        
+        NSMutableArray *mutableBoardsAndScores = [boardsAndScores mutableCopy];
+        
+        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscore forKey:@"topscore"];
+        
+        [defaults setObject:mutableBoardsAndScores forKey:@"boardsAndScores"];
+        [defaults synchronize];
     }
     
 }
@@ -470,6 +494,19 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)checkAndUpdateScore:(NSString*)topscore
+{
+
+    if ([topscore intValue] != 0)
+    {
+        bestScore.text = [[NSString alloc] initWithFormat:@"Best Score: %i", [topscore intValue]];
+    }
+    else 
+    {
+        bestScore.text = @"";
+    }
+}
+
 - (void)loadRandomGame
 {
 
@@ -483,9 +520,9 @@
     NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:arc4random() % boardsAndScores.count];
     
     NSArray *gameBoard = [boardAndScoreObject objectForKey:@"gameboard"];    
+    NSString *topscore = [boardAndScoreObject objectForKey:@"topscore"];
     
-    NSLog(@"SFSDFSDFSDFSDFDFSDFSDDS: %@", gameBoard);
-    
+    [self checkAndUpdateScore:topscore];
     [self loadButtonObjects];
     [self loadGame:gameBoard];
     
@@ -522,7 +559,9 @@
     NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:gameBoardIndex];
     
     NSArray *gameBoard = [boardAndScoreObject objectForKey:@"gameboard"];   
+    NSString *topscore = [boardAndScoreObject objectForKey:@"topscore"]; 
     
+    [self checkAndUpdateScore:topscore];
     [self loadGame:gameBoard];
     
 }
