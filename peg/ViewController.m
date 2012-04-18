@@ -180,14 +180,16 @@
         NSString *topscoreString = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
         
         NSMutableArray *mutableBoardsAndScores = [boardsAndScores mutableCopy];
+        NSMutableDictionary *topscore = [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] mutableCopy];
+        [topscore removeObjectForKey:@"topscore"];
+        [topscore setObject:topscoreString forKey:@"topscore"];
         
-//        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscoreString forKey:@"topscore"];
-        [[[mutableBoardsAndScores objectAtIndex:gameBoardIndex] mutableCopy] setObject:topscoreString forKey:@"topscore"];
+        [mutableBoardsAndScores removeObjectAtIndex:gameBoardIndex];
+        [mutableBoardsAndScores insertObject:topscore atIndex:gameBoardIndex];
         
         [defaults setObject:mutableBoardsAndScores forKey:@"boardsAndScores"];
         
         [defaults synchronize];
-        
     }
     
     else if ([self countCurrentPegs] < [topscore intValue])
@@ -195,11 +197,15 @@
         NSString *topscoreString = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
         
         NSMutableArray *mutableBoardsAndScores = [boardsAndScores mutableCopy];
+        NSMutableDictionary *topscore = [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] mutableCopy];
+        [topscore removeObjectForKey:@"topscore"];
+        [topscore setObject:topscoreString forKey:@"topscore"];
         
-//        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscoreString forKey:@"topscore"];
-        [[[mutableBoardsAndScores objectAtIndex:gameBoardIndex] mutableCopy] setObject:topscoreString forKey:@"topscore"];
+        [mutableBoardsAndScores removeObjectAtIndex:gameBoardIndex];
+        [mutableBoardsAndScores insertObject:topscore atIndex:gameBoardIndex];
         
         [defaults setObject:mutableBoardsAndScores forKey:@"boardsAndScores"];
+        
         [defaults synchronize];
     }
     
@@ -590,23 +596,6 @@
     [self checkAndUpdateScore:topscore];
     [self loadButtonObjects];
     [self loadGame:gameBoard];
-    
-    
-    
-//    NSArray *gameBoard1 = [[NSArray alloc] initWithObjects:
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"1", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil];  
-//    
-//    [self loadGame:gameBoard1];
-    
-    
     
     gameBoardIndex = [boardsAndScores indexOfObject:boardAndScoreObject];
     
