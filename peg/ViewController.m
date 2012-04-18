@@ -96,6 +96,9 @@
 @synthesize retryButtonPopup;
 @synthesize shuffleButtonPopup;
 
+@synthesize welcomePopup;
+@synthesize welcomeShuffleButton;
+
 - (void) clearJumpTo
 {
     
@@ -113,11 +116,6 @@
 
 - (void)loadGame:(NSArray*)gameBoard
 {    
-    
-    NSLog(@"%@", gameBoard);
-
-    
-    
     pressedButtonObject.enabled = YES;
     pressedButtonObject.selected = NO;
     pressedButtonObject.tag = PEG;
@@ -213,6 +211,14 @@
 
 - (void) loadPopup
 {
+    // play game over sound
+    
+    // play sound
+    SystemSoundID gameover;
+    AudioServicesCreateSystemSoundID(CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("sound_game_over"), CFSTR("wav"), NULL), &gameover);
+    AudioServicesPlaySystemSound(gameover);
+    
+    
     winPopup.hidden = NO;
     [winPopup setAlpha:0.0];
     [UIView beginAnimations:nil context:NULL];
@@ -363,12 +369,7 @@
 
 - (IBAction)buttonPressed:(UIButton*)sender
 {
-//    // sound
-//    SystemSoundID pop;
-//    AudioServicesCreateSystemSoundID(CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("pop"), CFSTR("mp3"), NULL), &pop);
-//    AudioServicesPlaySystemSound(pop);
-    
-    
+
     // ok, you pressed the button. what's its deal?
     NSLog(@"%@", sender);
     
@@ -386,6 +387,7 @@
     
     else if ([sender tag] == JUMPTO)
     {
+        
         NSLog(@"what about here?");
         int first = [buttonObjects indexOfObject:sender];
         int second = [buttonObjects indexOfObject:pressedButtonObject];
@@ -421,6 +423,13 @@
         if ([self checkGameOver] == YES)
         {
             NSLog(@"GAME THE FUCK OVER!!!!!!!! Current pegs: %i", [self countCurrentPegs]);
+        }
+        else 
+        {
+            // play sound
+            SystemSoundID jump;
+            AudioServicesCreateSystemSoundID(CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("sound_jump"), CFSTR("wav"), NULL), &jump);
+            AudioServicesPlaySystemSound(jump);
         }
     }
     
@@ -511,7 +520,7 @@
             
         }
         
-        if (pressedPeg < 48)
+        if (pressedPeg < 49)
         {
             // check if there's a peg below of the pressed peg
             if ([[buttonObjects objectAtIndex:pressedPeg+7] tag] == PEG)
@@ -572,7 +581,6 @@
     gameOverText.hidden = YES;
     numberOfPegsLeft.hidden = YES;
     
-    
     retryButtonPopup.hidden = YES;
     shuffleButtonPopup.hidden = YES;
 }
@@ -580,15 +588,16 @@
 - (void)loadRandomGame
 {
     [self unloadPopup];
-
-//    NSArray *gameBoard = [allGameBoards objectAtIndex:arc4random() % allGameBoards.count];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
     NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
     
-    NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:arc4random() % boardsAndScores.count];
+    int aRandom;
+    while ((aRandom = arc4random()%boardsAndScores.count) == gameBoardIndex);
+        
+    NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:aRandom];
     
     NSArray *gameBoard = [boardAndScoreObject objectForKey:@"gameboard"];    
     NSString *topscore = [boardAndScoreObject objectForKey:@"topscore"];
@@ -624,7 +633,30 @@
 
 - (IBAction)shuffleGame
 {
+    welcomePopup.hidden = YES;
+    welcomeShuffleButton.hidden = YES;
+    
     [self loadRandomGame];
+}
+
+- (void) checkIfFirstUserAndDisplayWelcomePopup
+{
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *getFirstUser = [defaults dictionaryRepresentation];
+    NSString *firstUser = [getFirstUser objectForKey:@"first"];
+    
+    if ([firstUser intValue] != 2)
+    {
+        
+        welcomePopup.hidden = NO;
+        welcomeShuffleButton.hidden = NO;
+        
+        [defaults setObject:@"1" forKey:@"first"];
+        [defaults synchronize];
+    }
+    
 }
 
 #pragma mark - View lifecycle
@@ -632,18 +664,20 @@
 - (void)viewDidLoad
 {
     
+    [self checkIfFirstUserAndDisplayWelcomePopup];
+    
     NSArray *boardsAndScoresArray = [[NSArray alloc] initWithObjects:
                                             [[NSDictionary alloc] initWithObjectsAndKeys:
                                              [[NSArray alloc] initWithObjects:
-                                              @"1", @"0", @"0", @"0", @"0", @"0", @"1", 
                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
-                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
-                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
-                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                              @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-                                              @"1", @"0", @"0", @"0", @"0", @"0", @"1", nil], @"gameboard", @"topscore", @"0", nil],
+                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
                                             [[NSDictionary alloc] initWithObjectsAndKeys:
                                              [[NSArray alloc] initWithObjects:
                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
@@ -655,28 +689,94 @@
                                               @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
-                                            [[NSDictionary alloc] initWithObjectsAndKeys:
-                                             [[NSArray alloc] initWithObjects:
-                                              @"0", @"1", @"0", @"0", @"0", @"1", @"0", 
-                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
-                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
-                                              @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
-                                              @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
-                                              @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
-                                              @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-                                              @"0", @"1", @"0", @"0", @"0", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil],
                                              [[NSDictionary alloc] initWithObjectsAndKeys:
                                               [[NSArray alloc] initWithObjects:
-                                               @"0", @"1", @"0", @"0", @"0", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
                                                @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
                                                @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
-                                               @"1", @"0", @"1", @"1", @"1", @"0", @"0", 
-                                               @"1", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
                                                @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
                                                @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
                                                @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-                                               @"0", @"1", @"0", @"0", @"0", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil], nil];
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"1", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"1", @"1", @"0", @"0", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"0", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"0", @"1", @"0", @"1", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"1", @"1", @"1", @"0", @"1", @"1", @"1", 
+                                               @"1", @"1", @"1", @"1", @"1", @"1", @"1", 
+                                               @"1", @"1", @"1", @"1", @"1", @"1", @"1", 
+                                               @"0", @"1", @"1", @"0", @"1", @"1", @"0", 
+                                               @"0", @"0", @"1", @"0", @"1", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil], @"gameboard", @"topscore", @"0", nil], nil];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -689,26 +789,6 @@
         [defaults setObject:boardsAndScoresArray forKey:@"boardsAndScores"];
         [defaults synchronize];
     }
-    
-
-    
-    
-    
-//    NSArray *gameBoard1 = [[NSArray alloc] initWithObjects:
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-//                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil];
-    
-
-    
-    
-//    allGameBoards = [[NSArray alloc] initWithObjects:gameBoard1, gameBoard2, gameBoard3, gameBoard4, nil];
     
     [self loadRandomGame];
 

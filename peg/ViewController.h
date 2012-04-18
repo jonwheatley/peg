@@ -122,6 +122,10 @@
 @property (strong, retain) IBOutlet UIButton *retryButtonPopup;
 @property (strong, retain) IBOutlet UIButton *shuffleButtonPopup;
 
+// welcome 
+
+@property (strong, retain) IBOutlet UIImageView *welcomePopup;
+@property (strong, retain) IBOutlet UIButton *welcomeShuffleButton;
 
 
 - (IBAction)buttonPressed:(UIButton*)sender;

@@ -45,5 +45,8 @@
         <string>Cubano-regular.otf</string>
     </array>
     
+    <key>UIPrerenderedIcon</key>
+    <true/>
+    
 </dict>
 </plist>
