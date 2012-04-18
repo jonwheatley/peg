@@ -169,32 +169,35 @@
     // pull old top score from the database
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
-    NSArray *boardsAndScores = [getBoardsAndScores objectForKey:@"boardsAndScores"];
-    NSDictionary *boardAndScoreObject = [boardsAndScores objectAtIndex:gameBoardIndex];
+    NSMutableArray *boardsAndScores = [[getBoardsAndScores objectForKey:@"boardsAndScores"] mutableCopy];
+    NSMutableDictionary *boardAndScoreObject = [[boardsAndScores objectAtIndex:gameBoardIndex] mutableCopy];
     NSString *topscore = [boardAndScoreObject objectForKey:@"topscore"];  
     
     NSLog(@"topscore in value: %i", [topscore intValue]);
     
     if ([topscore intValue] == 0)
     {
-        topscore = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
+        NSString *topscoreString = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
         
         NSMutableArray *mutableBoardsAndScores = [boardsAndScores mutableCopy];
         
-        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscore forKey:@"topscore"];
+//        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscoreString forKey:@"topscore"];
+        [[[mutableBoardsAndScores objectAtIndex:gameBoardIndex] mutableCopy] setObject:topscoreString forKey:@"topscore"];
         
         [defaults setObject:mutableBoardsAndScores forKey:@"boardsAndScores"];
+        
         [defaults synchronize];
         
     }
     
     else if ([self countCurrentPegs] < [topscore intValue])
     {
-        topscore = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
+        NSString *topscoreString = [[NSString alloc] initWithFormat:@"%i", [self countCurrentPegs]];
         
         NSMutableArray *mutableBoardsAndScores = [boardsAndScores mutableCopy];
         
-        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscore forKey:@"topscore"];
+//        [[mutableBoardsAndScores objectAtIndex:gameBoardIndex] setObject:topscoreString forKey:@"topscore"];
+        [[[mutableBoardsAndScores objectAtIndex:gameBoardIndex] mutableCopy] setObject:topscoreString forKey:@"topscore"];
         
         [defaults setObject:mutableBoardsAndScores forKey:@"boardsAndScores"];
         [defaults synchronize];
@@ -205,15 +208,43 @@
 - (void) loadPopup
 {
     winPopup.hidden = NO;
+    [winPopup setAlpha:0.0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [winPopup setAlpha:1.0];
+    [UIView commitAnimations];
+    
     gameOverText.hidden = NO;
+    [gameOverText setAlpha:0.0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [gameOverText setAlpha:1.0];
+    [UIView commitAnimations];
+    
     numberOfPegsLeft.hidden = NO;
+    [numberOfPegsLeft setAlpha:0.0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [numberOfPegsLeft setAlpha:1.0];
+    [UIView commitAnimations];
     
     // add custom font and update the text
     numberOfPegsLeft.font = [UIFont fontWithName:@"Cubano" size:28];
     numberOfPegsLeft.text = [[NSString alloc] initWithFormat:@"%i PEGS LEFT!", [self countCurrentPegs]];
     
     retryButtonPopup.hidden = NO;
+    [retryButtonPopup setAlpha:0.0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [retryButtonPopup setAlpha:1.0];
+    [UIView commitAnimations];
+    
     shuffleButtonPopup.hidden = NO;
+    [shuffleButtonPopup setAlpha:0.0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [shuffleButtonPopup setAlpha:1.0];
+    [UIView commitAnimations];
 }
 
 - (BOOL) checkGameOver
@@ -645,7 +676,18 @@
                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
                                               @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
-                                              @"0", @"1", @"0", @"0", @"0", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil], nil];
+                                              @"0", @"1", @"0", @"0", @"0", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil],
+                                             [[NSDictionary alloc] initWithObjectsAndKeys:
+                                              [[NSArray alloc] initWithObjects:
+                                               @"0", @"1", @"0", @"0", @"0", @"1", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                               @"1", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"1", @"1", @"1", @"1", @"1", @"1", @"0", 
+                                               @"0", @"0", @"1", @"1", @"1", @"0", @"0", 
+                                               @"0", @"0", @"0", @"1", @"0", @"0", @"0", 
+                                               @"0", @"0", @"0", @"0", @"0", @"0", @"0", 
+                                               @"0", @"1", @"0", @"0", @"0", @"1", @"0", nil], @"gameboard", @"topscore", @"0", nil], nil];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -654,6 +696,7 @@
     
     if (boardsAndScores.count < boardsAndScoresArray.count)
     {
+        NSLog(@"here5");
         [defaults setObject:boardsAndScoresArray forKey:@"boardsAndScores"];
         [defaults synchronize];
     }
