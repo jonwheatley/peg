@@ -89,7 +89,12 @@
 @synthesize i7;
 
 @synthesize bestScore;
+@synthesize winPopup;
+@synthesize gameOverText;
+@synthesize numberOfPegsLeft;
 
+@synthesize retryButtonPopup;
+@synthesize shuffleButtonPopup;
 
 - (void) clearJumpTo
 {
@@ -197,6 +202,20 @@
     
 }
 
+- (void) loadPopup
+{
+    winPopup.hidden = NO;
+    gameOverText.hidden = NO;
+    numberOfPegsLeft.hidden = NO;
+    
+    // add custom font and update the text
+    numberOfPegsLeft.font = [UIFont fontWithName:@"Cubano" size:28];
+    numberOfPegsLeft.text = [[NSString alloc] initWithFormat:@"%i PEGS LEFT!", [self countCurrentPegs]];
+    
+    retryButtonPopup.hidden = NO;
+    shuffleButtonPopup.hidden = NO;
+}
+
 - (BOOL) checkGameOver
 {
     
@@ -280,8 +299,10 @@
     }
     
     isGameOver = YES;
-    
     [self newTopScore];
+    [self loadPopup];
+    
+    
     
     return isGameOver;
     
@@ -505,10 +526,23 @@
     {
         bestScore.text = @"";
     }
+    bestScore.font = [UIFont fontWithName:@"Cubano" size:16];
+}
+
+- (void) unloadPopup
+{
+    winPopup.hidden = YES;
+    gameOverText.hidden = YES;
+    numberOfPegsLeft.hidden = YES;
+    
+    
+    retryButtonPopup.hidden = YES;
+    shuffleButtonPopup.hidden = YES;
 }
 
 - (void)loadRandomGame
 {
+    [self unloadPopup];
 
 //    NSArray *gameBoard = [allGameBoards objectAtIndex:arc4random() % allGameBoards.count];
     
@@ -551,6 +585,8 @@
 
 - (IBAction)restartGame
 {
+    [self unloadPopup];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSDictionary *getBoardsAndScores = [defaults dictionaryRepresentation];
@@ -621,6 +657,8 @@
         [defaults setObject:boardsAndScoresArray forKey:@"boardsAndScores"];
         [defaults synchronize];
     }
+    
+
     
     
     

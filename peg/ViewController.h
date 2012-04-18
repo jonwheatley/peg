@@ -113,6 +113,17 @@
 
 @property (strong, retain) IBOutlet UILabel *bestScore;
 
+// popup
+
+@property (strong, retain) IBOutlet UIImageView *winPopup;
+@property (strong, retain) IBOutlet UIImageView *gameOverText;
+@property (strong, retain) IBOutlet UILabel *numberOfPegsLeft;
+
+@property (strong, retain) IBOutlet UIButton *retryButtonPopup;
+@property (strong, retain) IBOutlet UIButton *shuffleButtonPopup;
+
+
+
 - (IBAction)buttonPressed:(UIButton*)sender;
 - (IBAction)shuffleGame;
 - (IBAction)restartGame;

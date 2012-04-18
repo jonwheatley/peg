@@ -9,6 +9,22 @@
 /* Begin PBXBuildFile section */
 		FC510FDF153E40F600AB74C6 /* pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FC510FDE153E40F600AB74C6 /* pop.mp3 */; };
 		FC510FE2153E42AC00AB74C6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC510FE1153E42AC00AB74C6 /* AudioToolbox.framework */; };
+		FCB495E2153E864F00C6C353 /* Cubano-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FCB495DF153E83EE00C6C353 /* Cubano-Regular.otf */; };
+		FCB495E3153E865800C6C353 /* cubano-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB495E1153E842E00C6C353 /* cubano-regular-webfont.ttf */; };
+		FCB495E6153E88DB00C6C353 /* popup.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495E4153E88DB00C6C353 /* popup.png */; };
+		FCB495E7153E88DB00C6C353 /* popup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495E5153E88DB00C6C353 /* popup@2x.png */; };
+		FCB495EA153E896800C6C353 /* game_over.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495E8153E896800C6C353 /* game_over.png */; };
+		FCB495EB153E896800C6C353 /* game_over@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495E9153E896800C6C353 /* game_over@2x.png */; };
+		FCB495F6153E8AA400C6C353 /* retry_button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495EC153E8AA400C6C353 /* retry_button_pressed.png */; };
+		FCB495F7153E8AA400C6C353 /* retry_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495ED153E8AA400C6C353 /* retry_button_pressed@2x.png */; };
+		FCB495F8153E8AA400C6C353 /* retry_button.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495EE153E8AA400C6C353 /* retry_button.png */; };
+		FCB495F9153E8AA400C6C353 /* retry_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495EF153E8AA400C6C353 /* retry_button@2x.png */; };
+		FCB495FA153E8AA400C6C353 /* shuffle_button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495F0153E8AA400C6C353 /* shuffle_button_pressed.png */; };
+		FCB495FB153E8AA400C6C353 /* shuffle_button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495F1153E8AA400C6C353 /* shuffle_button_pressed@2x.png */; };
+		FCB495FC153E8AA400C6C353 /* shuffle_button.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495F2153E8AA400C6C353 /* shuffle_button.png */; };
+		FCB495FD153E8AA400C6C353 /* shuffle_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495F3153E8AA400C6C353 /* shuffle_button@2x.png */; };
+		FCB495FE153E8AA400C6C353 /* shuffle_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495F4153E8AA400C6C353 /* shuffle_pressed.png */; };
+		FCB495FF153E8AA400C6C353 /* shuffle_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FCB495F5153E8AA400C6C353 /* shuffle_pressed@2x.png */; };
 		FCBA3309153D38110056347B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBA3308153D38110056347B /* UIKit.framework */; };
 		FCBA330B153D38110056347B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBA330A153D38110056347B /* Foundation.framework */; };
 		FCBA330D153D38110056347B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBA330C153D38110056347B /* CoreGraphics.framework */; };
@@ -36,6 +52,22 @@
 /* Begin PBXFileReference section */
 		FC510FDE153E40F600AB74C6 /* pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pop.mp3; sourceTree = "<group>"; };
 		FC510FE1153E42AC00AB74C6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FCB495DF153E83EE00C6C353 /* Cubano-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Cubano-Regular.otf"; path = "../../../Sharing/David Myers/peg/Cubano-Regular.otf"; sourceTree = "<group>"; };
+		FCB495E1153E842E00C6C353 /* cubano-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "cubano-regular-webfont.ttf"; path = "../../../Sharing/David Myers/peg/cubano-regular-webfont.ttf"; sourceTree = "<group>"; };
+		FCB495E4153E88DB00C6C353 /* popup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popup.png; sourceTree = "<group>"; };
+		FCB495E5153E88DB00C6C353 /* popup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popup@2x.png"; sourceTree = "<group>"; };
+		FCB495E8153E896800C6C353 /* game_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game_over.png; sourceTree = "<group>"; };
+		FCB495E9153E896800C6C353 /* game_over@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_over@2x.png"; sourceTree = "<group>"; };
+		FCB495EC153E8AA400C6C353 /* retry_button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retry_button_pressed.png; sourceTree = "<group>"; };
+		FCB495ED153E8AA400C6C353 /* retry_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retry_button_pressed@2x.png"; sourceTree = "<group>"; };
+		FCB495EE153E8AA400C6C353 /* retry_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retry_button.png; sourceTree = "<group>"; };
+		FCB495EF153E8AA400C6C353 /* retry_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "retry_button@2x.png"; sourceTree = "<group>"; };
+		FCB495F0153E8AA400C6C353 /* shuffle_button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuffle_button_pressed.png; sourceTree = "<group>"; };
+		FCB495F1153E8AA400C6C353 /* shuffle_button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shuffle_button_pressed@2x.png"; sourceTree = "<group>"; };
+		FCB495F2153E8AA400C6C353 /* shuffle_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuffle_button.png; sourceTree = "<group>"; };
+		FCB495F3153E8AA400C6C353 /* shuffle_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shuffle_button@2x.png"; sourceTree = "<group>"; };
+		FCB495F4153E8AA400C6C353 /* shuffle_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuffle_pressed.png; sourceTree = "<group>"; };
+		FCB495F5153E8AA400C6C353 /* shuffle_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shuffle_pressed@2x.png"; sourceTree = "<group>"; };
 		FCBA3304153D38110056347B /* peg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = peg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBA3308153D38110056347B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FCBA330A153D38110056347B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -124,6 +156,8 @@
 		FCBA330F153D38110056347B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FCB495DF153E83EE00C6C353 /* Cubano-Regular.otf */,
+				FCB495E1153E842E00C6C353 /* cubano-regular-webfont.ttf */,
 				FC510FDE153E40F600AB74C6 /* pop.mp3 */,
 				FCBA3325153D38270056347B /* images */,
 				FCBA3310153D38110056347B /* peg-Info.plist */,
@@ -137,6 +171,20 @@
 		FCBA3325153D38270056347B /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FCB495EC153E8AA400C6C353 /* retry_button_pressed.png */,
+				FCB495ED153E8AA400C6C353 /* retry_button_pressed@2x.png */,
+				FCB495EE153E8AA400C6C353 /* retry_button.png */,
+				FCB495EF153E8AA400C6C353 /* retry_button@2x.png */,
+				FCB495F0153E8AA400C6C353 /* shuffle_button_pressed.png */,
+				FCB495F1153E8AA400C6C353 /* shuffle_button_pressed@2x.png */,
+				FCB495F2153E8AA400C6C353 /* shuffle_button.png */,
+				FCB495F3153E8AA400C6C353 /* shuffle_button@2x.png */,
+				FCB495F4153E8AA400C6C353 /* shuffle_pressed.png */,
+				FCB495F5153E8AA400C6C353 /* shuffle_pressed@2x.png */,
+				FCB495E8153E896800C6C353 /* game_over.png */,
+				FCB495E9153E896800C6C353 /* game_over@2x.png */,
+				FCB495E4153E88DB00C6C353 /* popup.png */,
+				FCB495E5153E88DB00C6C353 /* popup@2x.png */,
 				FCBA3326153D38330056347B /* bg.png */,
 				FCBA3327153D38330056347B /* bg@2x.png */,
 				FCBA3328153D38330056347B /* peg_blue.png */,
@@ -205,6 +253,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCB495E3153E865800C6C353 /* cubano-regular-webfont.ttf in Resources */,
+				FCB495E2153E864F00C6C353 /* Cubano-Regular.otf in Resources */,
 				FCBA3313153D38110056347B /* InfoPlist.strings in Resources */,
 				FCBA331F153D38110056347B /* ViewController.xib in Resources */,
 				FCBA3334153D38340056347B /* bg.png in Resources */,
@@ -222,6 +272,20 @@
 				FCBA3340153D38340056347B /* shuffle.png in Resources */,
 				FCBA3341153D38340056347B /* shuffle@2x.png in Resources */,
 				FC510FDF153E40F600AB74C6 /* pop.mp3 in Resources */,
+				FCB495E6153E88DB00C6C353 /* popup.png in Resources */,
+				FCB495E7153E88DB00C6C353 /* popup@2x.png in Resources */,
+				FCB495EA153E896800C6C353 /* game_over.png in Resources */,
+				FCB495EB153E896800C6C353 /* game_over@2x.png in Resources */,
+				FCB495F6153E8AA400C6C353 /* retry_button_pressed.png in Resources */,
+				FCB495F7153E8AA400C6C353 /* retry_button_pressed@2x.png in Resources */,
+				FCB495F8153E8AA400C6C353 /* retry_button.png in Resources */,
+				FCB495F9153E8AA400C6C353 /* retry_button@2x.png in Resources */,
+				FCB495FA153E8AA400C6C353 /* shuffle_button_pressed.png in Resources */,
+				FCB495FB153E8AA400C6C353 /* shuffle_button_pressed@2x.png in Resources */,
+				FCB495FC153E8AA400C6C353 /* shuffle_button.png in Resources */,
+				FCB495FD153E8AA400C6C353 /* shuffle_button@2x.png in Resources */,
+				FCB495FE153E8AA400C6C353 /* shuffle_pressed.png in Resources */,
+				FCB495FF153E8AA400C6C353 /* shuffle_pressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
